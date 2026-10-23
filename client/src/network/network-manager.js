@@ -316,7 +316,7 @@ NetworkManager.prototype.createAccount = function (options) {
    * Connects to the server websocket at the remote host and port
    */
 
-  let url = "/api/login?account=%s&password=%s&name=%s&sex=%s".format(options.account, options.password, options.name, options.sex);
+  let url = "https://gravak-login-test.onrender.com/?account=%s&password=%s&name=%s&sex=%s".format(encodeURIComponent(options.account), encodeURIComponent(options.password), encodeURIComponent(options.name), encodeURIComponent(options.sex));
 
   // Make a post request
   fetch(url, { "method": "POST" }).then(function (response) {
@@ -390,7 +390,7 @@ NetworkManager.prototype.connect = function () {
   let { account, password } = gameClient.interface.getAccountDetails();
 
   // Contact the login server
-  fetch("/api/login?account=%s&password=%s".format(account, password)).then(function (response) {
+  fetch("https://gravak-login-test.onrender.com/?account=%s&password=%s".format(encodeURIComponent(account), encodeURIComponent(password))).then(function (response) {
 
     switch (response.status) {
       case 200: break;
