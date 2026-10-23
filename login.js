@@ -11,7 +11,7 @@ if (require.main === module) {
    * Function called when the initialization script is executed
    */
 
-  console.log("Starting NodeJS Gravak Open Tibia Login Server.");
+  CONFIG.LOGIN.PORT = Number(process.env.PORT || CONFIG.LOGIN.PORT);\n  console.log("Starting NodeJS Gravak Open Tibia Login Server.");
 
   // Start
   global.loginServer = new LoginServer();
