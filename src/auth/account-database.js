@@ -2,7 +2,7 @@
 
 const CharacterCreator = requireModule("auth/character-creator");
 const Enum = requireModule("utils/enum");
-const { getDatabase, closeDatabase, schema } = require("../db");
+const { getDatabase, closeDatabase, ensureSchema, schema } = require("../db");
 const { accounts } = schema;
 const { eq, and } = require("drizzle-orm");
 
@@ -42,6 +42,7 @@ AccountDatabase.prototype.__open = async function () {
 
   try {
     this.db = getDatabase();
+    await ensureSchema();
     this.__status = this.STATUS.OPEN;
     console.log("The PostgreSQL database connection has been opened");
 
