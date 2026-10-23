@@ -84,14 +84,15 @@ GameServer.prototype.initialize = function () {
   // When the server was started
   this.__initialized = Date.now();
 
-  // Database
+  // Open the HTTP listener before loading the large Tibia map.
+  // Render requires the service port to be bound during startup.
+  this.HTTPServer.listen();
+
+  // Database initialization loads the world map and can take significant time.
   this.database.initialize();
 
-  // Start the gameloop
+  // Start the gameloop only after the world and database are initialized.
   this.gameLoop.initialize();
-
-  // Listen for incoming connections
-  this.HTTPServer.listen();
 
 }
 
