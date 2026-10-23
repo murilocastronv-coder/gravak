@@ -10,6 +10,22 @@ require("dotenv").config();
 let db = null;
 let pool = null;
 
+async function ensureSchema() {
+    const connection = getDatabase();
+    await pool.query("CREATE SCHEMA IF NOT EXISTS gravak_test");
+    await pool.query(`CREATE TABLE IF NOT EXISTS gravak_test.accounts (
+        id SERIAL PRIMARY KEY,
+        account VARCHAR(32) NOT NULL,
+        hash VARCHAR(60) NOT NULL,
+        name VARCHAR(32) NOT NULL,
+        character TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT NOW(),
+        updated_at TIMESTAMP DEFAULT NOW()
+    )`);
+    await pool.query("CREATE UNIQUE INDEX IF NOT EXISTS account_name_unique ON gravak_test.accounts (account, name)");
+    return connection;
+}
+
 /**
  * Initialize the database connection
  * @returns {Object} Drizzle database instance
@@ -67,5 +83,6 @@ module.exports = {
     initDatabase,
     getDatabase,
     closeDatabase,
+    ensureSchema,
     schema,
 };
