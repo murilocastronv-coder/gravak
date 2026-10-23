@@ -11,7 +11,7 @@ if (require.main === module) {
    * Function called when the engine script is executed
    */
 
-  console.log("Starting NodeJS Gravak Open Tibia Server");
+  CONFIG.SERVER.PORT = Number(process.env.PORT || CONFIG.SERVER.PORT);\n  CONFIG.SERVER.EXTERNAL_HOST = process.env.EXTERNAL_HOST || CONFIG.SERVER.EXTERNAL_HOST;\n  console.log("Starting NodeJS Gravak Open Tibia Server");
   console.log("Creating server with version %s".format(CONFIG.SERVER.CLIENT_VERSION));
   console.log("Setting data directory to %s".format(getDataFile("")));
 
