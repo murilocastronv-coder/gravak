@@ -1,19 +1,21 @@
 "use strict";
 
-const { pgTable, serial, varchar, text, timestamp, uniqueIndex } = require("drizzle-orm/pg-core");
+const { pgSchema, serial, varchar, text, timestamp, uniqueIndex } = require("drizzle-orm/pg-core");
 
 /**
- * Schema definition for the accounts table
- * Stores user accounts and their character data
+ * Keep Gravak's account data isolated from existing applications sharing
+ * the Forge PostgreSQL instance. Never create or alter public.accounts.
  */
-const accounts = pgTable(
+const gravakSchema = pgSchema("gravak_test");
+
+const accounts = gravakSchema.table(
     "accounts",
     {
         id: serial("id").primaryKey(),
         account: varchar("account", { length: 32 }).notNull(),
         hash: varchar("hash", { length: 60 }).notNull(),
         name: varchar("name", { length: 32 }).notNull(),
-        character: text("character").notNull(), // JSON stored as text
+        character: text("character").notNull(),
         createdAt: timestamp("created_at").defaultNow(),
         updatedAt: timestamp("updated_at").defaultNow(),
     },
