@@ -8,4 +8,4 @@ RUN npm ci
 
 COPY . .
 
-CMD ["npm", "run", "start"]
+CMD ["sh", "-c", "npm run db:push && npm run start"]
